@@ -23,7 +23,7 @@ def tweet(message):
 
     return
 
-
+#Top 10 trending topics
 def get_trending():
     api = init_API(USER_KEYS.consumer_key, USER_KEYS.consumer_secret, USER_KEYS.access_token,
                    USER_KEYS.access_token_secret)
@@ -33,11 +33,11 @@ def get_trending():
         trends.append(trend['name'])
     return trends
 
-
-def get_tweets_text(search_term):
+#Top n results for a given search parameter
+def get_tweets_text(search_term, count):
     api = init_API(USER_KEYS.consumer_key, USER_KEYS.consumer_secret, USER_KEYS.access_token,
                    USER_KEYS.access_token_secret)
-    search_result = api.search(search_term)
+    search_result = api.search(search_term, count=count)
     tweets = []
     for status in search_result:
         tweets.append(status.text)
