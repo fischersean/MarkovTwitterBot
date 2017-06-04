@@ -107,19 +107,21 @@ while len(message) < 100: #random.randrange(50,101):
     rand_num = random.random()
 
 #make sure there are no @ symbols in tweet. if there are, get rid of them.
+print("Cleaning up and tweeting")
 message = list (message)
 for i in range(len(message)):
     if message[i] == "@":
         message[i] = ""
 message = "".join(message)
-print(message + "...")
-
-if len(message + "...") < 140:
-    twitter.tweet(message + "...")
+message = message + "..."
+if len(message) < 140:
+    twitter.tweet(api, message)
 else:
-    twitter.tweet(message[0:135]+ "...")
-
+    message = message[0:135] + "..."
+    twitter.tweet(api, message[0:135])
+print(message + "...")
 print("Finished in " + str(time.time()-start_time) + " seconds")
+
 conn.commit()
 c.close()
 conn.close()
