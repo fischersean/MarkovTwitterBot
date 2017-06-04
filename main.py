@@ -30,7 +30,7 @@ for trend in trends:
         c.execute("INSERT INTO tweets (tweet_text) VALUES(?)", (trending_tweets[i],))
         conn.commit()
 
-get tweets from database
+# get tweets from database
 c.execute("""SELECT * FROM tweets""")
 full_tweets = c.fetchall()
 tweets = []
