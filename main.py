@@ -30,7 +30,7 @@ for trend in trends:
         c.execute("INSERT INTO tweets (tweet_text) VALUES(?)", (trending_tweets[i],))
         conn.commit()
 
-# get tweets from database
+#get tweets from database
 c.execute("""SELECT * FROM tweets""")
 full_tweets = c.fetchall()
 tweets = []
@@ -44,7 +44,7 @@ print("Determining word pairs")
 word_before = ""
 word_after = ""
 for tweet in tweets:
-    tweet = [x for x in tweet if x != "RT" and x[:1] != "@"]
+    tweet = [x for x in tweet if x != "RT" and x[:1] != "@" and x[:1] != "&"]
     for word in tweet:
         word_after = word
         query_result1 = c.execute("SELECT * FROM markovs_words WHERE word_before = ?", (word_before,))
@@ -98,7 +98,7 @@ rand_num = random.random()
 total_prob = 0
 n = -1
 
-while len(message) < 100:  # random.randrange(50,101):
+while len(message) < 100:
     while total_prob < rand_num:
         n = n + 1
         total_prob = total_prob + word_choice[n][3]
@@ -106,13 +106,14 @@ while len(message) < 100:  # random.randrange(50,101):
     if word_choice[n][1][-1:] in stop_conditions and len(message) > 50:
         break
     word_choice = c.execute("""SELECT * FROM markovs_words WHERE word_before = ?""", (word_choice[n][1],)).fetchall()
+#    c.execute("""DELETE FROM markovs_words WHERE word_before = ?""", (word_choice[n][1],))
     n = -1
     total_prob = 0
     rand_num = random.random()
 
 #make sure there are no @ symbols in tweet. if there are, get rid of them.
 print("Cleaning up and tweeting")
-puncs_to_remove = [""" " """]
+puncs_to_remove = ['"','(',')']
 
 message = list (message)
 for i in range(len(message)):
