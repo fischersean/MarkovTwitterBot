@@ -29,7 +29,7 @@ def get_trending(api):
 
 #Top n results for a given search parameter
 def get_tweets_text(api, search_term, count):
-    search_result = api.search(search_term, count=count, lang="en")
+    search_result = api.search(search_term, count=count, lang="en", tweet_mode='extended')
     tweets = []
     for status in search_result:
         tweets.append(status.text)
