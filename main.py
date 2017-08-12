@@ -44,7 +44,7 @@ print("Determining word pairs")
 word_before = ""
 word_after = ""
 for tweet in tweets:
-    tweet = [x for x in tweet if x != "RT" and x[:1] != "@" and x[:1] != "&" and x[:1] != ".@"]
+    tweet = [x for x in tweet if x != "RT" and x[:1] != "@" and x[:1] != "&" and x[:1] != ".@" and x[:1] != "#"]
     for word in tweet:
         word_after = word
         query_result1 = c.execute("SELECT * FROM markovs_words WHERE word_before = ?", (word_before,))
